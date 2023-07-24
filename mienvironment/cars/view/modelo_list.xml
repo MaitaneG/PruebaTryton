@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="nombre"/>
+    <field name="marca"/>
+    <field name="combustible"/>
+    <field name="caballos"/>
+    <field name="precio"/>
+    <field name="fecha_lanzamiento"/>
+</tree>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<tryton>
+	<data>
+		<record model="ir.action.act_window" id="act_coches_form">
+			<field name="name">Lista de Coches</field>
+			<field name="res_model">cars.coches</field>
+			<field name="domain" 
+				eval="[If(Eval('active_ids',[]) == [Eval('active_id')], ('party','=', Eval('active_id')), ('party','in', Eval('active_ids')))]" pyson="1"/>
+			<field name="search_value" eval="[('state','not in', ['done', 'cancelled'])]" pyson="1"/>
+		</record>
+		<record model="ir.action.keyword" id="act_open_coches_keyword">
+			<field name="keyword">form_relate</field>
+			<field name="model">party.party,-1</field>
+			<field name="action" ref="act_coches_form"/>
+		</record>
+	</data>
+</tryton>

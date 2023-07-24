@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+
+<tryton>
+	<data>
+        <!-- Groups and users -->
+		<record model="res.group" id="group_cars_admin">
+			<field name="name">Cars Administrator</field>
+		</record>
+		<record model="res.user-res.group" id="user_admin_group_cars_admin">
+			<field name="user" ref="res.user_admin"/>
+			<field name="group" ref="group_cars_admin"/>
+		</record>
+
+		<record model="res.group" id="group_cars_user">
+			<field name="name">Cars User</field>
+		</record>
+		<record model="res.user-res.group" id="user_admin_group_cars_user">
+			<field name="user" ref="res.user_admin"/>
+			<field name="group" ref="group_cars_user"/>
+		</record>
+
+        <!-- Main menu -->
+		<menuitem name="Cars" sequence="3" id="menu_cars"/>
+
+        <!-- Views -->
+		<record model="ir.ui.view" id="marca_view_form">
+            <field name="model">cars.marca</field>
+            <field name="type">form</field>
+            <field name="name">marca_form</field>
+        </record>
+        <record model="ir.ui.view" id="marca_view_list">
+            <field name="model">cars.marca</field>
+            <field name="type">tree</field>
+            <field name="name">marca_list</field>
+        </record>
+
+        <!-- Action and relation -->
+        <record model="ir.action.act_window" id="act_marca_form">
+            <field name="name">Marcas</field>
+            <field name="res_model">cars.marca</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_marca_form_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="marca_view_list"/>
+            <field name="act_window" ref="act_marca_form"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_marca_form_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="marca_view_form"/>
+            <field name="act_window" ref="act_marca_form"/>
+        </record>
+
+        <!-- Marca menu -->
+        <menuitem parent="menu_cars" action="act_marca_form"
+            sequence="10" id="menu_marca_form"/>
+
+        <!-- Views -->
+        <record model="ir.ui.view" id="modelo_view_form">
+            <field name="model">cars.modelo</field>
+            <field name="type">form</field>
+            <field name="name">modelo_form</field>
+        </record>
+        <record model="ir.ui.view" id="modelo_view_list">
+            <field name="model">cars.modelo</field>
+            <field name="type">tree</field>
+            <field name="name">modelo_list</field>
+        </record>
+
+        <!-- Action and relation -->
+        <record model="ir.action.act_window" id="act_modelo_form">
+            <field name="name">Modelo</field>
+            <field name="res_model">cars.modelo</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_modelo_form_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="modelo_view_list"/>
+            <field name="act_window" ref="act_modelo_form"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_modelo_form_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="modelo_view_form"/>
+            <field name="act_window" ref="act_modelo_form"/>
+        </record>
+
+        <!-- Modelo menu -->
+        <menuitem parent="menu_cars" action="act_modelo_form"
+            sequence="10" id="menu_modelo_form"/>
+
+        <!-- Views -->
+        <record model="ir.ui.view" id="coche_view_form">
+            <field name="model">cars.coche</field>
+            <field name="type">form</field>
+            <field name="name">coche_form</field>
+        </record>
+        <record model="ir.ui.view" id="coche_view_list">
+            <field name="model">cars.coche</field>
+            <field name="type">tree</field>
+            <field name="name">coche_list</field>
+        </record>
+
+        <!-- Action and relation -->
+        <record model="ir.action.act_window" id="act_coche_form">
+            <field name="name">Coche</field>
+            <field name="res_model">cars.coche</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_coche_form_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="coche_view_list"/>
+            <field name="act_window" ref="act_coche_form"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_coche_form_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="coche_view_form"/>
+            <field name="act_window" ref="act_coche_form"/>
+        </record>
+
+        <!-- Modelo menu -->
+        <menuitem parent="menu_cars" action="act_coche_form"
+            sequence="10" id="menu_coche_form"/>
+
+        <!-- Keyword actions -->
+        <record model="ir.action.act_window" id="act_coches_form">
+            <field name="name">Lista de Coches</field>
+            <field name="res_model">cars.coche</field>
+            <field name="domain" 
+                eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('propietario','=', Eval('active_id')), ('propietario','in', Eval('active_ids')))]" pyson="1"/>
+        </record>
+        <record model="ir.action.keyword" id="act_open_coches_keyword">
+            <field name="keyword">form_relate</field>
+            <field name="model">party.party,-1</field>
+            <field name="action" ref="act_coches_form"/>
+        </record> 
+	</data>
+</tryton>

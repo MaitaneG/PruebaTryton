@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<tryton>
+	<data>
+		<record model="res.group" id="group_cars_admin">
+			<field name="name">Cars Administrator</field>
+		</record>
+		<record model="res.user-res.group" id="user_admin_group_cars_admin">
+			<field name="user" ref="res.user_admin"/>
+			<field name="group" ref="group_cars_admin"/>
+		</record>
+
+		<record model="res.group" id="group_cars_user">
+			<field name="name">Cars User</field>
+		</record>
+		<record model="res.user-res.group" id="user_admin_group_cars_user">
+			<field name="user" ref="res.user_admin"/>
+			<field name="group" ref="group_cars_user"/>
+		</record>
+	</data>
+</tryton>

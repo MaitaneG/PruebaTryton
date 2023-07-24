@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<form>
+    <label name="nombre"/>
+    <field name="nombre" colspan="3"/>
+    <field name="modelos" colspan="4"/>
+</form>
