@@ -67,6 +67,7 @@ class ModeloProduct(ModelSQL):
 class Coche(ModelSQL, ModelView):
     'Coche'
     __name__='cars.coche'
+    _rec_name='matricula'
     matricula=fields.Char('Matricula', required=True,
         states={
                 'readonly': Eval('id', -1) > 0 ## Or Greater(), Para que el field sea readonly cuando se ha guardado el registro
@@ -156,11 +157,11 @@ class BajaCoche(Wizard):
         Button('Baja','baja','tryton-ok',default=True)])
     baja=StateTransition()
     result=StateView('cars.coche.baja.result','cars.coche_baja_result_view_form',[
-        Button('Close','end','tryton-close')])
+        Button('Close','end','tryton-close',default=True)])
 
 
 
-class BajaCocheStart(Wizard):
+class BajaCocheStart(ModelView):
     "Baja de Coche"
     __name__="cars.coche.baja.start"
     fecha_baja=fields.Date('Fecha de baja', required=True)
@@ -171,7 +172,7 @@ class BajaCocheStart(Wizard):
 
 
 
-class BajaCocheResult(Wizard):
+class BajaCocheResult(ModelView):
     "Resultado de Baja de Coche"
     __name__="cars.coche.baja.result"
     cantidad=fields.Integer('Cantidad de cambios hechos', required=True, readonly=True)
