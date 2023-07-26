@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<form>
+    <label name="fecha_baja"/>
+    <field name="fecha_baja"/>
+</form>

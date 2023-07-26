@@ -2,6 +2,7 @@ from trytond.model import ModelView, ModelSQL,fields, Unique
 from trytond.pyson import Eval, Bool
 import datetime
 from trytond.pool import Pool, PoolMeta
+from trytond.wizard import Wizard, StateView, StateTransition, Button
 
 class Marca(ModelSQL,ModelView):
     'Marca'
@@ -34,7 +35,8 @@ class Modelo(ModelSQL, ModelView):
     piezas=fields.Many2Many('cars.modelo_product','modelo','pieza','Piezas compatibles',
         domain=[
             ('type','=','goods') ## Para que dependa de que existe una marca
-        ])
+        ]
+    )
 
 
     ## Poner la fecha de lanzamiento automáticamente a la hora de hoy
@@ -142,3 +144,34 @@ class Coche(ModelSQL, ModelView):
     def on_change_with_precio(self):  
         if self.marca and self.modelo and self.modelo.precio:
             return self.modelo.precio        
+
+
+
+class BajaCoche(Wizard):
+    "Dar de baja el coche"
+    __name__="cars.coche.baja"
+
+    start=StateView('cars.coche.baja.start','cars.coche_baja_start_view_form',[
+        Button('Cancel','end','tryton-cancel'),
+        Button('Baja','baja','tryton-ok',default=True)])
+    baja=StateTransition()
+    result=StateView('cars.coche.baja.result','cars.coche_baja_result_view_form',[
+        Button('Close','end','tryton-close')])
+
+
+
+class BajaCocheStart(Wizard):
+    "Baja de Coche"
+    __name__="cars.coche.baja.start"
+    fecha_baja=fields.Date('Fecha de baja', required=True)
+
+    @classmethod
+    def default_fecha_baja(cls):
+        return datetime.date.today()
+
+
+
+class BajaCocheResult(Wizard):
+    "Resultado de Baja de Coche"
+    __name__="cars.coche.baja.result"
+    cantidad=fields.Integer('Cantidad de cambios hechos', required=True, readonly=True)

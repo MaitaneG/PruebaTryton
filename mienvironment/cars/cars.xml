@@ -118,17 +118,51 @@
         <menuitem parent="menu_cars" action="act_coche_form"
             sequence="10" id="menu_coche_form"/>
 
-        <!-- Keyword actions -->
-        <record model="ir.action.act_window" id="act_coches_form">
+        <!-- Relation actions -->
+        <record model="ir.action.act_window" id="act_coches_party_form">
             <field name="name">Lista de Coches</field>
             <field name="res_model">cars.coche</field>
             <field name="domain" 
                 eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('propietario','=', Eval('active_id')), ('propietario','in', Eval('active_ids')))]" pyson="1"/>
         </record>
-        <record model="ir.action.keyword" id="act_open_coches_keyword">
+        <record model="ir.action.keyword" id="act_open_coches_party_keyword">
             <field name="keyword">form_relate</field>
             <field name="model">party.party,-1</field>
-            <field name="action" ref="act_coches_form"/>
+            <field name="action" ref="act_coches_party_form"/>
         </record> 
+
+        <record model="ir.action.act_window" id="act_piezas_form">
+            <field name="name">Coches compatibles</field>
+            <field name="res_model">cars.coche</field>
+            <field name="domain" 
+                eval="[If(Eval('active_ids', []) == [Eval('active_id')], ('modelo.piezas','=', Eval('active_id')), ('modelo.piezas','in', Eval('active_ids')))]" pyson="1"/>
+        </record>
+        <record model="ir.action.keyword" id="act_open_piezas_keyword">
+            <field name="keyword">form_relate</field>
+            <field name="model">product.template,-1</field>
+            <field name="action" ref="act_piezas_form"/>
+        </record> 
+
+        <!-- Wizard view -->
+        <record model="ir.ui.view" id="coche_baja_start_view_form">
+            <field name="model">cars.coche.baja.start</field>
+            <field name="type">form</field>
+            <field name="name">coche_baja_start_form</field>
+        </record>
+        <record model="ir.ui.view" id="coche_baja_result_view_form">
+            <field name="model">cars.coche.baja.result</field>
+            <field name="type">form</field>
+            <field name="name">coche_baja_result_form</field>
+        </record>
+        <!-- Wizard action -->
+        <record model="ir.action.wizard" id="act_baja_coche">
+            <field name="name">Dar de Baja el Coche</field>
+            <field name="wiz_name">cars.coche.baja</field>
+        </record>
+        <record model="ir.action.keyword" id="act_baja_coche_keyword_view">
+            <field name="keyword">form_action</field>
+            <field name="model">cars.coche,-1</field>
+            <field name="action" ref="act_baja_coche"/>
+        </record>
 	</data>
 </tryton>

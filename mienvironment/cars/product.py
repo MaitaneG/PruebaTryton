@@ -8,7 +8,7 @@ class Product(metaclass=PoolMeta):
         states={
             'invisible': Eval('type', '') != 'goods' ## Para que el field sea invisible cuando type no sea goods
         },
-        depends=['type'],
+        depends=['type']
     )
 
     ## Poner la unidad automáticamente

@@ -12,10 +12,13 @@ def register():
         cars.Modelo,
         cars.Coche,
         cars.ModeloProduct,
+        cars.BajaCocheStart,
+        cars.BajaCocheResult,
         party.Party,
         product.Product,
         module='cars', type_='model')
     Pool.register(
+        cars.BajaCoche,
         module='cars', type_='wizard')
     Pool.register(
         module='cars', type_='report')
