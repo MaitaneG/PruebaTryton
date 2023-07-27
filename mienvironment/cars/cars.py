@@ -3,6 +3,8 @@ from trytond.pyson import Eval, Bool
 import datetime
 from trytond.pool import Pool, PoolMeta
 from trytond.wizard import Wizard, StateView, StateTransition, Button
+from trytond.transaction import Transaction
+from trytond.report import Report
 
 class Marca(ModelSQL,ModelView):
     'Marca'
@@ -26,7 +28,7 @@ class Modelo(ModelSQL, ModelView):
             ('precio','=',None) ## Para que el precio no sea obligatorio
         ]) 
     combustible=fields.Selection([
-        ('V',''),
+        ('',''),
         ('G','Gasolina'),
         ('D','Diesel'),
         ('H','Hibrido'),
@@ -147,6 +149,7 @@ class Coche(ModelSQL, ModelView):
             return self.modelo.precio        
 
 
+## Wizard
 
 class BajaCoche(Wizard):
     "Dar de baja el coche"
@@ -158,6 +161,18 @@ class BajaCoche(Wizard):
     baja=StateTransition()
     result=StateView('cars.coche.baja.result','cars.coche_baja_result_view_form',[
         Button('Close','end','tryton-close',default=True)])
+
+    def transition_baja(self):
+        pool = Pool()
+        Coche = pool.get('cars.coche')
+        coches=Coche.browse(Transaction().context['active_ids'])
+
+        for coche in coches:
+            coche.fecha_baja=self.start.fecha_baja
+
+        Coche.save(coches)
+        #self.result.cantidad=len(coches)
+        return "result"
 
 
 
@@ -176,3 +191,24 @@ class BajaCocheResult(ModelView):
     "Resultado de Baja de Coche"
     __name__="cars.coche.baja.result"
     cantidad=fields.Integer('Cantidad de cambios hechos', required=True, readonly=True)
+
+    @classmethod
+    def default_cantidad(cls):
+        return len(Transaction().context['active_ids'])
+
+
+## Report
+class CocheReport(Report):
+    __name__ = 'account.invoice'
+
+    @classmethod
+    def get_context(cls, records, header, data):
+        pool = Pool()
+        Employee = pool.get('company.employee')
+
+        context = super().get_context(records, header, data)
+        employee_id = Transaction().context.get('employee')
+        employee = Employee(employee_id) if employee_id else None
+        context['employee'] = employee
+
+        return context

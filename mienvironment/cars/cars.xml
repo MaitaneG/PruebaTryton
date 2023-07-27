@@ -114,6 +114,7 @@
             <field name="act_window" ref="act_coche_form"/>
         </record>
 
+        <!-- Relate action -->
         <!-- Modelo menu -->
         <menuitem parent="menu_cars" action="act_coche_form"
             sequence="10" id="menu_coche_form"/>
@@ -143,6 +144,7 @@
             <field name="action" ref="act_piezas_form"/>
         </record> 
 
+        <!-- Wizard -->
         <!-- Wizard view -->
         <record model="ir.ui.view" id="coche_baja_start_view_form">
             <field name="model">cars.coche.baja.start</field>
@@ -164,5 +166,20 @@
             <field name="model">cars.coche,-1</field>
             <field name="action" ref="act_baja_coche"/>
         </record>
+
+        <!-- Report -->
+        <record model="ir.action.report" id="act_report_coche">
+            <field name="name">Coche</field>
+            <field name="report_name">cars.coche</field>
+            <field name="model">cars.coche</field>
+            <field name="report">cars/reports/coche_ficha_tecnica.odt</field>
+            <field name="template_extension">odt</field>
+            <field name="extension">pdf</field>
+        </record>
+        <record model="ir.action.keyword" id="report_coche_keyword">
+          <field name="keyword">form_print</field>
+          <field name="model">cars.coche,-1</field>
+          <field name="action" ref="act_report_coche"/>
+       </record>
 	</data>
 </tryton>

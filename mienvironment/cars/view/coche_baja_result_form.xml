@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
 <form>
-    <label name="cantidad"/>
-    <field name="cantidad"/>
+    <label id="coches_baja" string="Se han dado de baja"/>
+    <field name="cantidad" xfill="0.0"/>
+    <label id="coches_number" string=" coches" xalign="0.0"/>
 </form>
