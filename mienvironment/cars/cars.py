@@ -5,6 +5,7 @@ from trytond.pool import Pool, PoolMeta
 from trytond.wizard import Wizard, StateView, StateTransition, Button
 from trytond.transaction import Transaction
 from trytond.report import Report
+from trytond.modules.company import CompanyReport
 
 class Marca(ModelSQL,ModelView):
     'Marca'
@@ -198,17 +199,17 @@ class BajaCocheResult(ModelView):
 
 
 ## Report
-class CocheReport(Report):
-    __name__ = 'account.invoice'
+class CocheReport(CompanyReport):
+    __name__ = 'cars.coche'
 
     @classmethod
     def get_context(cls, records, header, data):
-        pool = Pool()
-        Employee = pool.get('company.employee')
+        #pool = Pool()
+        #Employee = pool.get('company.employee')
 
         context = super().get_context(records, header, data)
-        employee_id = Transaction().context.get('employee')
-        employee = Employee(employee_id) if employee_id else None
-        context['employee'] = employee
+        #employee_id = Transaction().context.get('employee')
+        #employee = Employee(employee_id) if employee_id else None
+        #context['empresa'] = "pepe"
 
         return context

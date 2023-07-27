@@ -21,4 +21,5 @@ def register():
         cars.BajaCoche,
         module='cars', type_='wizard')
     Pool.register(
+        cars.CocheReport,
         module='cars', type_='report')
