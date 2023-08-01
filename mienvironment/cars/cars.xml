@@ -168,9 +168,10 @@
         </record>
 
         <!-- Report -->
+        <!-- Word -->
         <record model="ir.action.report" id="act_report_coche">
-            <field name="name">Coche</field>
-            <field name="report_name">cars.coche</field>
+            <field name="name">Documento de los Coches</field>
+            <field name="report_name">cars.coche.report</field>
             <field name="model">cars.coche</field>
             <field name="report">cars/reports/coche_ficha_tecnica.odt</field>
             <field name="template_extension">odt</field>
@@ -180,6 +181,20 @@
           <field name="keyword">form_print</field>
           <field name="model">cars.coche,-1</field>
           <field name="action" ref="act_report_coche"/>
+       </record>
+       <!-- Excell -->
+       <record model="ir.action.report" id="act_report_coche_excel">
+            <field name="name">Excel de los Coches</field>
+            <field name="report_name">cars.coche.report.excel</field>
+            <field name="model">cars.coche</field>
+            <field name="report">cars/reports/coche_ficha_tecnica.ods</field>
+            <field name="template_extension">ods</field>
+            <field name="extension">csv</field>
+        </record>
+        <record model="ir.action.keyword" id="report_coche_excel_keyword">
+          <field name="keyword">form_print</field>
+          <field name="model">cars.coche,-1</field>
+          <field name="action" ref="act_report_coche_excel"/>
        </record>
 	</data>
 </tryton>

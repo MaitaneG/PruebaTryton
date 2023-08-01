@@ -22,4 +22,5 @@ def register():
         module='cars', type_='wizard')
     Pool.register(
         cars.CocheReport,
+        cars.CocheReportExcel,
         module='cars', type_='report')
