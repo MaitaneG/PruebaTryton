@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Crear marca{% endblock %}
+{% block content %}
+<form action="{{ url_for('marcas') }}" method="GET">
+	<button>Ir atrás</button>
+</form>
+<br>
+<form action="" method="POST">
+	<label>Nombre</label>
+	<input type="text" name="nombre" required />
+	<button type="submit">Crear marca</button>
+</form>
+{% endblock %}

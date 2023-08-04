@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Crear modelo{% endblock %}
+{% block content %}
+<form action="{{ url_for('marca', marca=marca.id) }}" method="GET">
+	<button>Ir atrás</button>
+</form>
+<br>
+<form action="" method="POST">
+	<label>Nombre</label>
+	<input type="text" name="nombre" required />
+	<label>Marca</label>
+	<input type="hidden" name="marca" value="{{marca.id}}" />
+	<input type="text" name="marca" value="{{marca.nombre}}" required/>
+	<label>Combustible</label>
+	<select name="combustible">
+		{% for clave, valor in combustible %}
+			<option value="{{clave}}">{{valor}}</option>
+		{% endfor %}
+	</select>
+	<label>Número de caballos</label>
+	<input type="number" name="caballos"/>
+	<label>Precio</label>
+	<input type="number" name="precio" />
+	<button type="submit">Crear modelo</button>
+</form>
+{% endblock %}

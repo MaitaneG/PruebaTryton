@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}{% endblock %} - Taller</title>
+    {% endblock %}
+</head>
+<body>
+    <div id="content">
+    {% block content %}
+        {% if not session %}
+            <form action="{{ url_for('login') }}" method="GET">
+              <button>Login</button>
+            </form>
+            <form action="{{ url_for('registro') }}" method="GET">
+              <button>Registro</button>
+            </form>
+        {% else %}
+            {{session['username']}}
+            <form action="{{ url_for('logout') }}" method="GET">
+              <button>Logout</button>
+            </form>
+        {% endif %}
+    {% endblock %}</div>
+    <div id="footer">
+        {% block footer %}
+        &copy; Copyright 2008 by <a href="http://domain.invalid/">you</a>.
+        {% endblock %}
+    </div>
+</body>
+</html>
+

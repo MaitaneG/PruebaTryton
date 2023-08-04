@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{marca.nombre}}{% endblock %}
+
+{% block content %}
+  <form action="{{ url_for('marcas') }}" method="GET">
+    <button>Ir atrás</button>
+  </form>
+  <br>
+  <h1>NOMBRE:</h1>
+  <p> {{ marca.nombre }}</p>
+  <h1>NUESTROS MODELOS:</h1>
+
+  <form action="{{ url_for('crear_modelo', marca=marca.id) }}" method="GET">
+    <button>Crear modelo</button>
+  </form>
+
+  {% for modelo in modelos %}
+    <form action="{{ url_for('crear_coche', modelo=modelo.id) }}" method="GET">
+      <p>{{modelo.nombre}} <button>Comprar coche</button></p>
+    </form>
+  {% endfor %}
+
+  <h1>NUESTROS COCHES:</h1>
+  {% for coche in coches %}
+    <p>- {{coche.matricula}} | {{coche.propietario.name}} | {{coche.precio}} | {{coche.marca.nombre}} | {{coche.modelo.nombre}}</p>
+  {% endfor %}
+{% endblock %}

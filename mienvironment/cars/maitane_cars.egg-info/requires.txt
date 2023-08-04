@@ -1,5 +1,6 @@
 trytond<6.9,>=6.8
 trytond_party<6.9,>=6.8
 trytond_product<6.9,>=6.8
+trytond_web_user<6.9,>=6.8
 
 [test]

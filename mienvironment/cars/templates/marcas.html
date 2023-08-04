@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Marcas{% endblock %}
+
+{% block content %}
+{{super()}}
+<h1>LAS MARCAS</h1>
+{% for marca in marcas %}
+  <p><a href="{{ url_for('marca', marca=marca) }}">{{ marca.nombre }}</a></p>
+{% endfor %}
+<form action="{{ url_for('crear_marca') }}" method="GET">
+  <button>Crear marca</button>
+</form>
+
+{% endblock %}
+{% block footer %}
+<p>Nuestras marcas</p>
+{{ super() }}
+{% endblock %}
