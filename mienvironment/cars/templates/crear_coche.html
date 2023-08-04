@@ -10,12 +10,7 @@
 	<label>Matricula</label>
 	<input type="text" name="matricula" required />
 	<label>Propietario</label>
-	<select name="propietario" required>
-		<option selected></option>
-		{% for party in parties %}
-			<option value="{{party.id}}">{{party.name}}</option>
-		{% endfor %}
-	</select>
+	<input type="text" name="propietario" value="{{party.name}}" readonly required />
 	<label>Marca</label>
 	<input type="hidden" name="marca" value="{{modelo.marca.id}}">
 	<input type="text" type="text" name="marca" value="{{modelo.marca.nombre}}" readonly required/>

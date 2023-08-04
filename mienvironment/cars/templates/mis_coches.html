@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Mis coches{% endblock %}
+
+{% block content %}
+{{super()}}
+<h1>MIS COCHES</h1>
+{% for coche in coches %}
+  <p>- {{coche.matricula}} | {{coche.propietario.name}} | {{coche.precio}} | {{coche.marca.nombre}} | {{coche.modelo.nombre}}</p>
+{% endfor %}
+
+{% endblock %}

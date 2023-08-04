@@ -73,6 +73,12 @@ def registro():
   parties = Party.search([])
   return render_template('registro.html',parties=parties)
 
+@app.route("/mis_coches")
+@tryton.transaction()
+@login_required
+def mis_coches():
+  coches = Coche.search(['propietario','=',session['party']])
+  return render_template('mis_coches.html',coches=coches)
 
 @app.route('/logout')
 @tryton.transaction (readonly=False) 
@@ -97,6 +103,7 @@ def marcas():
 
 @app.route("/crear_marca", methods=['POST','GET'])
 @tryton.transaction()
+@login_required
 def crear_marca():
   if request.method=='POST':
     marcaNueva=Marca()
@@ -117,6 +124,7 @@ def marca(marca):
 
 @app.route('/crear_modelo/<record("cars.marca"):marca>', methods=['POST','GET'])
 @tryton.transaction()
+@login_required
 def crear_modelo(marca):
   if request.method=='POST':
     modeloNuevo=Modelo()
@@ -135,11 +143,13 @@ def crear_modelo(marca):
 
 @app.route('/modelo/<record("cars.modelo"):modelo>', methods=['POST','GET'])
 @tryton.transaction()
+@login_required
 def crear_coche(modelo):
   if request.method=='POST':
     cocheNuevo=Coche()
     cocheNuevo.matricula = request.form.get('matricula','')
-    cocheNuevo.propietario = int(request.form.get('propietario',None))
+    if session.get('party'):
+      cocheNuevo.propietario = g.user.party
     cocheNuevo.marca = int(request.form.get('marca',None))
     cocheNuevo.modelo = int(request.form.get('modelo',None))
     cocheNuevo.precio = int(request.form.get('precio',0))
@@ -148,8 +158,7 @@ def crear_coche(modelo):
     cocheNuevo.save()
     return redirect(url_for('marca', marca=cocheNuevo.marca.id))
 
-  parties = Party.search([])
-  return render_template('crear_coche.html', modelo=modelo, parties=parties)
+  return render_template('crear_coche.html', modelo=modelo, party=g.user.party)
 
 
 @app.route('/hello/')
